@@ -22,7 +22,7 @@
 #### 2.变量
 
 ###### 变量命名
-> * 变量名区分大小写 \$var 与 \$Var 不同
+> * 变量名区分大小写 $var 与 $Var 不同
 > * 变量名不能以数字开头
 
 ###### 变量赋值
@@ -53,22 +53,22 @@ Test();
 上面代码的运行结果：
 > * Notice: Undefined variable: a in D:\wamp\www\test.php on line 6
 
-提示 \$a未定义，正确做法在 \$a 前加上个 global
+提示 $a未定义，正确做法在 $a 前加上个 global
 
 ------
 
 #### 3.预定义变量
 常见的预定义变量：
-> * \$_SERVER — 服务器和执行环境信息
-> * \$_GET — HTTP GET 变量
-> * \$_POST — HTTP POST 变量
-> * \$_FILES — HTTP 文件上传变量
-> * \$_REQUEST — HTTP Request 变量
-> * \$_SESSION — Session 变量
-> * \$_COOKIE — HTTP Cookies
+> * $_SERVER — 服务器和执行环境信息
+> * $_GET — HTTP GET 变量
+> * $_POST — HTTP POST 变量
+> * $_FILES — HTTP 文件上传变量
+> * $_REQUEST — HTTP Request 变量
+> * $_SESSION — Session 变量
+> * $_COOKIE — HTTP Cookies
 
 例子：获取文件路径
-> * \$_SERVER['PHP_SELF'];
+> * $_SERVER['PHP_SELF'];
 
 ------
 
@@ -149,7 +149,7 @@ foreach (array_expression as $value)
 foreach (array_expression as $key => $value)
     statement
 ```
-第二种的\$key为数组的 键
+第二种的$key为数组的 键
 
 ------
 
