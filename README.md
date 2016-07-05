@@ -209,10 +209,10 @@ require 和 include 几乎完全一样，除了处理失败的方式不同之外
 ```php
 <?php
 function f1(){
-	echo 1;
+  echo 1;
 }
 functin F1(){
-	echo 2;
+  echo 2;
 }
 f1();
 
@@ -236,7 +236,8 @@ if ($makefoo) {
   function foo()
   {
     echo "I am foo\n"; 
-    // '\n'在输出为文本的时候才能换行，在网页上应用'<br/>'(html标签);
+    /* '\n'在输出为文本的时候才能换行，在网页上应用'<br/>'(html标签);
+    或者使用 echo nl2br("I am foo\nsdfdsa"); */
   }
 }
 
@@ -257,7 +258,7 @@ function bar()
 <?php
 
 function f1($f1){
-	$f1 .= 'f1';
+  $f1 .= 'f1';
 }
 function f2(&$f2) // 加上了符号 &
 {
@@ -321,9 +322,9 @@ array(2) {
 <?php
 
 function f1(){
-	echo '123' . '<br />';
-	$c = func_get_args();
-	var_dump($c);
+  echo '123' . '<br />';
+  $c = func_get_args();
+  var_dump($c);
 }
 
 $a = 456;
@@ -339,7 +340,17 @@ array(2) { [0]=> int(456) [1]=> array(2) { [0]=> string(3) "aaa" [1]=> string(3)
 
 #### 2.3 调用函数时传入参数的个数与原函数定义的不符：
 > * 书写规范：函数定义多个参数时应以逗号+空格隔开
+```php
+<?php
+function f1($a = 1, $b = 2){
+  echo $a + $b ;
+}
+f1('6and',2,4);
 
+/* result
+8
+*/
+```
 注意当使用默认参数时，任何默认参数必须放在任何非默认参数的右侧；否则，函数将不会按照预期的情况工作。考虑下面的代码片断：
 ```php
 <?php
@@ -362,7 +373,28 @@ Making a bowl of raspberry .
 > * 函数内若要返回多个须以数组形式。
 
 ## 4.可变函数
+> * call_user_func — 把第一个参数作为回调函数调用,传入call_user_func()的参数不能为引用传递。
+> * call_user_func_array — 调用回调函数，并把一个数组参数作为回调函数的参数
+```php
+<?php
+error_reporting(E_ALL);
+function increment(&$var)
+{
+    $var++;
+}
 
+$a = 0;
+call_user_func('increment', $a);
+echo $a."\n";
+
+call_user_func_array('increment', array(&$a)); // You can use this instead before PHP 5.3
+echo $a."\n";
+
+/* result
+Warning: Parameter 1 to increment() expected to be a reference, value given in D:\wamp\www\test.php on line 9
+0 1
+*/
+```
 
 ## 5.内置函数
 join()函数是implode()的别名，作用：返回由数组元素组合成的字符串。
@@ -388,3 +420,37 @@ Array ( [0] => Hello [1] => world. [2] => I [3] => love [4] => Shanghai! )
 */
 ```
 ## 6.匿名函数
+用use将变量传进来，此时的变量是局部变量，函数不会改变变量的值。
+用global将变量传进来，此时的变量是全局变量，函数能够改变变量的值。
+```php
+<?php
+$a = 1;
+$b = 1;
+$f1 = function() use ($a){
+  $a = $a + 2;
+  echo $a;
+};
+$f1();
+echo '<br/>';
+echo $a;
+
+echo '<br>----<br>';
+
+$f2 = function(){
+  global $b;
+  $b = $b + 2;
+  echo $b;
+};
+$f2();
+echo '<br/>';
+echo $b;
+
+/* resrult
+3
+1
+----
+3
+3
+*/
+
+```
